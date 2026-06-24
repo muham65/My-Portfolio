@@ -91,6 +91,16 @@ const templates = [
       'шаблоны/шаблон-3.2.png',
       'шаблоны/шаблон-3.3.png'
     ]
+  },
+  {
+    title: 'Шаблон №4',
+    category: 'Кафе / Ресторан',
+    images: [
+      'шаблоны/шаблон-4.1.png',
+      'шаблоны/шаблон-4.2.png',
+      'шаблоны/шаблон-4.3.png',
+      'шаблоны/шаблон-4.4.png'
+    ]
   }
 ];
 
@@ -139,6 +149,10 @@ const modalImages = document.getElementById('modalImages');
 let currentProject = null;
 let currentImageIndex = 0;
 
+function preloadImages(srcs) {
+  srcs.forEach(src => { const img = new Image(); img.src = src; });
+}
+
 function openModal(id) {
   const p = projects.find(proj => proj.id === id);
   if (!p) return;
@@ -155,6 +169,7 @@ function openModal(id) {
   `;
 
 
+  preloadImages(p.images);
   updateCarousel();
   modalOverlay.classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -225,6 +240,7 @@ let currentTmplIndex = 0;
 function openLightbox(tmplIdx, imgIdx) {
   currentTemplate = templates[tmplIdx];
   currentTmplIndex = imgIdx;
+  preloadImages(currentTemplate.images);
   updateLightbox();
   lightbox.classList.add('open');
   document.body.style.overflow = 'hidden';
